@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 import { GoogleDriveService } from './google-drive-service';
+import { exit } from 'process';
 
 dotenv.config();
 
@@ -20,9 +21,13 @@ const driveRefreshToken = process.env['GOOGLE_DRIVE_REFRESH_TOKEN'] || '';
     throw new Error('File not found!');
   }
 
-  await googleDriveService.saveFile('test.xlsx', finalPath, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet').catch((error) => {
-    console.error(error);
-  });
-
-  console.info('File uploaded successfully!');
+  await googleDriveService.saveFile('test.xlsx', finalPath, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    .catch(() => {
+      console.error('File upload failed!');
+      exit();
+    })
+    .then(() => {
+      console.info('File uploaded successfully!');
+      exit();
+    });
 })();

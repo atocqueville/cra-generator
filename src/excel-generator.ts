@@ -4,7 +4,17 @@ async function createAndFillWorkbook() {
   const workbook = new Workbook();
   const worksheet = workbook.addWorksheet('TODO Month computed');
 
-  worksheet.columns = [{}, { header: 'Id', key: 'id' }, { header: 'Name', key: 'name', width: 32 }, { header: 'Age', key: 'age' }];
+  worksheet.mergeCells('B1:C1');
+  worksheet.mergeCells('B2:C2');
+  worksheet.mergeCells('D1:D2');
+  worksheet.mergeCells('E1:E2');
+  worksheet.getCell('B1').value = 'NOM: de Tocqueville';
+  worksheet.getCell('B2').value = 'PRENOM: Alexandre';
+  worksheet.getCell('D1').value = 'CLIENT: Padoa';
+  worksheet.getCell('B2').value = 'MOIS: Test';
+
+  worksheet.getRow(1).height = 30;
+  worksheet.getRow(2).height = 30;
 
   // const rows = [
   //   {id: 1, name: 'fdffe', age: 25},
@@ -14,8 +24,6 @@ async function createAndFillWorkbook() {
   // worksheet.addRows(rows);
   // worksheet.addRow({});
 
-  // worksheet.addRow({id: 1, name: 'fdffe', age: 25});
-
   // add a table to a sheet
   worksheet.addTable({
     name: 'MyTable',
@@ -23,7 +31,7 @@ async function createAndFillWorkbook() {
     headerRow: true,
     totalsRow: true,
     style: {
-      showRowStripes: true,
+      showRowStripes: false,
     },
     columns: [
       { name: 'Date', totalsRowLabel: 'Totals:' },
