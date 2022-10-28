@@ -9,9 +9,13 @@ async function createAndFillWorkbook() {
   worksheet.mergeCells('D1:D2');
   worksheet.mergeCells('E1:E2');
   worksheet.getCell('B1').value = 'NOM: de Tocqueville';
+  worksheet.getCell('B1').alignment = { vertical: 'middle', horizontal: 'center' };
   worksheet.getCell('B2').value = 'PRENOM: Alexandre';
+  worksheet.getCell('B2').alignment = { vertical: 'middle', horizontal: 'center' };
   worksheet.getCell('D1').value = 'CLIENT: Padoa';
-  worksheet.getCell('B2').value = 'MOIS: Test';
+  worksheet.getCell('D1').alignment = { vertical: 'middle', horizontal: 'center' };
+  worksheet.getCell('E1').value = 'MOIS: Test';
+  worksheet.getCell('E1').alignment = { vertical: 'middle', horizontal: 'center' };
 
   worksheet.getRow(1).height = 30;
   worksheet.getRow(2).height = 30;
