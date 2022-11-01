@@ -22,7 +22,8 @@ const driveRefreshToken = process.env['GOOGLE_DRIVE_REFRESH_TOKEN'] || '';
   }
 
   await googleDriveService.saveFile('test.xlsx', finalPath, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    .catch(() => {
+    .catch((e) => {
+      console.log(e)
       console.error('File upload failed!');
       exit();
     })

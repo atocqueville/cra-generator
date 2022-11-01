@@ -1,4 +1,28 @@
 import { Workbook, Row, TableColumnProperties } from 'exceljs';
+import { startOfMonth, parse, addDays } from 'date-fns';
+import readline from 'readline';
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+function ask (question): Promise<string> {
+  return new Promise(resolve => {
+    rl.question(question, resolve);
+  });
+}
+
+async function getMonth() {
+  const monthInNumber: string = await ask('Quel mois? ');
+  rl.close();
+
+  const yesterdayOfMonthChosen = parse(monthInNumber, 'M', new Date());
+  const userTimezoneOffset = yesterdayOfMonthChosen.getTimezoneOffset() * 60000;
+  const dayWithoutOffset = new Date(yesterdayOfMonthChosen.getTime() - userTimezoneOffset);
+
+  return dayWithoutOffset;
+}
 
 async function createAndFillWorkbook() {
   const workbook = new Workbook();
@@ -20,26 +44,28 @@ async function createAndFillWorkbook() {
   worksheet.getRow(1).height = 30;
   worksheet.getRow(2).height = 30;
 
-  // const rows = [
-  //   {id: 1, name: 'fdffe', age: 25},
-  //   {id:6, name: 'Barbara', age: new Date()}
-  // ];
+  worksheet.getColumn(2).width = 15;
+  worksheet.getColumn(3).width = 15;
+  worksheet.getColumn(4).width = 30;
+  worksheet.getColumn(5).width = 30;
 
-  // worksheet.addRows(rows);
-  // worksheet.addRow({});
+  const firstDayOfMonth = await getMonth();
+
+  console.log(firstDayOfMonth)
 
   // add a table to a sheet
   worksheet.addTable({
     name: 'MyTable',
     ref: 'B3',
     headerRow: true,
-    totalsRow: true,
     style: {
       showRowStripes: false,
     },
     columns: [
-      { name: 'Date', totalsRowLabel: 'Totals:' },
-      { name: 'Amount', totalsRowFunction: 'sum' },
+      { name: 'Date' },
+      { name: 'Jour' },
+      { name: 'Présence' },
+      { name: 'Absence' },
     ],
     rows: [
       [new Date('2019-07-20'), 70.1],

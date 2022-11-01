@@ -24,6 +24,7 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
     "exceljs": "^4.3.0",
     "googleapis": "^108.0.0"
