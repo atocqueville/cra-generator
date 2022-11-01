@@ -13,11 +13,15 @@ function ask (question): Promise<string> {
   });
 }
 
-async function getMonth() {
+async function getMonth(): Promise<string> {
   const monthInNumber: string = await ask('Quel mois? ');
   rl.close();
 
-  const yesterdayOfMonthChosen = parse(monthInNumber, 'M', new Date());
+  return monthInNumber;
+}
+
+function monthNumberToDate(month: string): Date {
+  const yesterdayOfMonthChosen = parse(month, 'M', new Date());
   const userTimezoneOffset = yesterdayOfMonthChosen.getTimezoneOffset() * 60000;
   const dayWithoutOffset = new Date(yesterdayOfMonthChosen.getTime() - userTimezoneOffset);
 
@@ -49,7 +53,8 @@ async function createAndFillWorkbook() {
   worksheet.getColumn(4).width = 30;
   worksheet.getColumn(5).width = 30;
 
-  const firstDayOfMonth = await getMonth();
+  const monthComputed = await getMonth();
+  const firstDayOfMonth = monthNumberToDate(monthComputed)
 
   console.log(firstDayOfMonth)
 
@@ -74,7 +79,7 @@ async function createAndFillWorkbook() {
     ],
   });
 
-  await workbook.xlsx.writeFile('test.xlsx');
+  await workbook.xlsx.writeFile(`CRA-2022-${monthComputed}.xlsx`);
 }
 
 createAndFillWorkbook();
