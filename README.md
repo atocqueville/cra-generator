@@ -1,18 +1,11 @@
-# Node Typescript Starter
+# Env file template
 
-This project contains a minimal starter for Node.js project with Typescript, ESLint and Prettier already configured
-
-## Prerequisites
-- Node.js 10+
-- Yarn or NPM
-
-## Installation
-- Install dependencies
-```bash
-yarn install
 ```
-- Start Application
-```bash
-yarn start
+FIRST_NAME=
+LAST_NAME=
+CLIENT_NAME=
+GOOGLE_DRIVE_CLIENT_ID=
+GOOGLE_DRIVE_CLIENT_SECRET=
+GOOGLE_DRIVE_REDIRECT_URI=
+GOOGLE_DRIVE_REFRESH_TOKEN=
 ```
-The application will be launched by [Nodemon](https://nodemon.com) so it's will restart automatically on file change
