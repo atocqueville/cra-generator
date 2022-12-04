@@ -1,5 +1,5 @@
 import readline from 'readline';
-import { parse, getDaysInMonth, addDays, format, setDefaultOptions } from 'date-fns';
+import { parse, getDaysInMonth, addDays, format, setDefaultOptions, isSaturday, isSunday } from 'date-fns';
 import { fr } from 'date-fns/locale';
 setDefaultOptions({ locale: fr });
 
@@ -44,10 +44,11 @@ export function getRows(monthComputed) {
   }
 
   return daysComputed.map(day => {
+    const isSaturdayOrSunday = isSaturday(day) || isSunday(day);
     return [
       format(day, 'dd/MM'),
       format(day, 'eeeee'),
-      1,
+      isSaturdayOrSunday ? 0 : 1,
       0
     ]
   })

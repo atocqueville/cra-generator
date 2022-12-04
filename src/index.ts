@@ -20,6 +20,7 @@ const clientName = process.env['CLIENT_NAME'] || '';
   const fileName = await createAndFillWorkbook({firstName, lastName, clientName});
   const finalPath = path.resolve(__dirname, `../generated/${fileName}`);
 
+  // process.exit();
   const googleDriveService = new GoogleDriveService(driveClientId, driveClientSecret, driveRedirectUri, driveRefreshToken);
 
   if (!fs.existsSync(finalPath)) {

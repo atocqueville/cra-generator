@@ -47,6 +47,51 @@ export async function createAndFillWorkbook({firstName, lastName, clientName}) {
     rows,
   });
 
+
+  for (var i = 3; i <= worksheet.rowCount; i++) {
+    const cells = [2, 3, 4, 5];
+
+    worksheet.getRow(i).getCell(2).border = { left: {style:'thin'} }
+    worksheet.getRow(i).getCell(5).border = { right: {style:'thin'} }
+
+    if (i === 3) {
+      cells.forEach((cell) => {
+        worksheet.getRow(i).getCell(cell).border = {
+          top: { style: 'thin' },
+          right: { style: cell === 5 ? 'thin' : undefined },
+          left: { style: cell === 2 ? 'thin' : undefined }
+        }
+        worksheet.getRow(i).getCell(cell).fill = {
+          type: 'pattern',
+          pattern:'solid',
+          fgColor:{ argb: '#7ca6d7' },
+        }
+      })
+    }
+    if (i === worksheet.rowCount) {
+      cells.forEach((cell) => {
+        worksheet.getRow(i).getCell(cell).border = {
+          bottom: { style: 'thin' },
+          right: { style: cell === 5 ? 'thin' : undefined },
+          left: { style: cell === 2 ? 'thin' : undefined }
+        }
+      })
+    }
+
+    const data = worksheet.getRow(i).getCell(3).toString();
+    if (data === 'S' || data === 'D') {
+      const cells = [2, 3, 4, 5];
+      cells.forEach((cell => {
+        worksheet.getRow(i).getCell(cell).fill = {
+          type: 'pattern',
+          pattern:'solid',
+          fgColor:{ argb: '#CCCCCC' },
+        }
+      }))
+
+    }
+  }
+
   const fileName = `CRA-2022-${monthComputed}.xlsx`;
   await workbook.xlsx.writeFile('generated/' + fileName);
   return fileName;
